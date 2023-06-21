@@ -5,7 +5,8 @@ import Card from "../UI/Card";
 import "./ProductForm.css";
 
 const ProductForm = React.memo((props) => {
-  const [inputState, setInputState] = useState({ title: "", amount: "" });
+  const [title, setTitle] = useState("");
+  const [amount, setAmount] = useState("");
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -20,13 +21,8 @@ const ProductForm = React.memo((props) => {
             <input
               type="text"
               id="title"
-              value={inputState.title}
-              onChange={(event) =>
-                setInputState({
-                  title: event.target.value,
-                  amount: inputState.amount,
-                })
-              }
+              value={title}
+              onChange={(event) => setTitle(event.target.value)}
             />
           </div>
           <div className="form-control">
@@ -34,13 +30,8 @@ const ProductForm = React.memo((props) => {
             <input
               type="number"
               id="amount"
-              value={inputState.amount}
-              onChange={(event) =>
-                setInputState({
-                  amount: event.target.value,
-                  title: inputState.title,
-                })
-              }
+              value={amount}
+              onChange={(event) => setAmount(event.target.value)}
             />
           </div>
           <div className="product-form__actions">
