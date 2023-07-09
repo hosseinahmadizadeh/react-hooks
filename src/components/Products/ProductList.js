@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react";
 
-import './ProductList.css'
+import "./ProductList.css";
 
 const ProductList = (props) => {
   return (
@@ -15,7 +15,7 @@ const ProductList = (props) => {
         ))}
       </ul>
     </section>
-  )
-}
+  );
+};
 
-export default ProductList
+export default ProductList;

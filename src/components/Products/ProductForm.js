@@ -10,6 +10,7 @@ const ProductForm = React.memo((props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
+    props.onAddProduct({ title: title, amount: amount });
   };
 
   return (
