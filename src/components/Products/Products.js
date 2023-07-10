@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import ProductForm from "./ProductForm";
 import ProductList from "./ProductList";
@@ -6,6 +6,25 @@ import Search from "./Search";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetch("https://react-hook-a1f92-default-rtdb.firebaseio.com/products.json")
+      .then((response) => {
+        return response.json();
+      })
+      .then((responseData) => {
+        const loadedProducts = [];
+
+        for (const item in responseData) {
+          loadedProducts.push({
+            id: item,
+            title: responseData[item].title,
+            amount: responseData[item].amount,
+          });
+        }
+        setProducts(loadedProducts);
+      });
+  }, []);
 
   const addProductHandler = (item) => {
     fetch(
