@@ -26,6 +26,10 @@ const Products = () => {
       });
   }, []);
 
+  const searchProductsHandler = (items) => {
+    setProducts(items);
+  };
+
   const addProductHandler = (item) => {
     fetch(
       "https://react-hook-a1f92-default-rtdb.firebaseio.com/products.json",
@@ -53,7 +57,7 @@ const Products = () => {
       <ProductForm onAddProduct={addProductHandler} />
 
       <section>
-        <Search />
+        <Search onLoadProducts={searchProductsHandler} />
         <ProductList products={products} onRemoveItem={() => {}} />
       </section>
     </div>
