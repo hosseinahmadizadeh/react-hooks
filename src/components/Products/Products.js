@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import ProductForm from "./ProductForm";
 import ProductList from "./ProductList";
@@ -26,9 +26,9 @@ const Products = () => {
       });
   }, []);
 
-  const searchProductsHandler = (items) => {
+  const searchProductsHandler = useCallback((items) => {
     setProducts(items);
-  };
+  }, []);
 
   const addProductHandler = (item) => {
     fetch(
