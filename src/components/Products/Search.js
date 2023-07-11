@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import Card from "../UI/Card";
 
@@ -7,32 +7,39 @@ import "./Search.css";
 const Search = React.memo((props) => {
   const { onLoadProducts } = props;
   const [searchItem, setSearchItem] = useState("");
+  const inputRef = useRef();
 
   useEffect(() => {
-    const query =
-      searchItem.length === 0 ? "" : `?orderBy="title"&equalTo="${searchItem}"`;
+    setTimeout(() => {
+      if (searchItem === inputRef.current.value) {
+        const query =
+          searchItem.length === 0
+            ? ""
+            : `?orderBy="title"&equalTo="${searchItem}"`;
 
-    fetch(
-      "https://react-hook-a1f92-default-rtdb.firebaseio.com/products.json" +
-        query
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((responseData) => {
-        const loadedProducts = [];
+        fetch(
+          "https://react-hook-a1f92-default-rtdb.firebaseio.com/products.json" +
+            query
+        )
+          .then((response) => {
+            return response.json();
+          })
+          .then((responseData) => {
+            const loadedProducts = [];
 
-        for (const item in responseData) {
-          loadedProducts.push({
-            id: item,
-            title: responseData[item].title,
-            amount: responseData[item].amount,
+            for (const item in responseData) {
+              loadedProducts.push({
+                id: item,
+                title: responseData[item].title,
+                amount: responseData[item].amount,
+              });
+            }
+
+            onLoadProducts(loadedProducts);
           });
-        }
-
-        onLoadProducts(loadedProducts);
-      });
-  }, [searchItem, onLoadProducts]);
+      }
+    }, 1000);
+  }, [searchItem, onLoadProducts, inputRef]);
 
   return (
     <section className="search">
@@ -41,6 +48,7 @@ const Search = React.memo((props) => {
           <label>جست و جو</label>
           <input
             type="text"
+            ref={inputRef}
             value={searchItem}
             onChange={(event) => setSearchItem(event.target.value)}
           />
